@@ -1,0 +1,33 @@
+﻿@model PaintShop.Web.ViewModels.HomeViewModel
+@{
+    ViewBag.Title = "Home";
+}
+
+<div class="row body">
+    <aside class="col-sm-3">
+        <ul>
+            @foreach (var product in @Model.TopProducts)
+            {
+                <li>@product</li>
+            }
+        </ul>
+    </aside>
+    <div class="col-sm-9 pics-body">
+        <div class="row">
+            <div class="col-sm-9 img-1">
+                <img src="~/Imgs/interior-design-1-480x302.jpg" />
+            </div>
+            <div class="col-sm-3 img-2">
+                <img src="~/Imgs/interior-design-10-480x414.jpg" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 img-3">
+                <img src="~/Imgs/interior-design-11-480x286.jpg" />
+            </div>
+            <div class="col-sm-6 img-4">
+                <img src="~/Imgs/interior-design-3-480x300.jpg" />
+            </div>
+        </div>
+    </div>
+</div>
