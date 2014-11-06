@@ -42,11 +42,16 @@ img {
     height: 345px;
 }
 
-.img-3, .img-4 {
+.img-bottom {
     height: 175px;
 }
 
 .pics-body {
     height: 100%;
 }
+
+.full-height {
+    height: 100%;
+}
+
 

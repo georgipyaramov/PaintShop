@@ -1,0 +1,26 @@
+﻿@model IEnumerable<PaintShop.Web.Areas.Administration.ViewModels.ProductsViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@foreach (var product in Model)
+{
+    <a class="row" href="@Url.Content("~/Administration/Products/" + product.Id)" 
+       style="border: 1px solid black; height:70px; display:block">
+        <div>
+            <div class="col-lg-offset-1 col-sm-3 full-height">
+                <img src="@Url.Content(product.Logo.Path)" alt="@product.Logo.Name" />
+            </div>
+            <div class="col-sm-4">
+                <h3 class="text-center">@product.Name</h3>
+            </div>
+            <div class="col-sm-3">
+                <h3 class="text-center">@product.Rating</h3>
+            </div>
+        </div>
+    </a>
+
+}
+

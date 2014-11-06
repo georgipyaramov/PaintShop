@@ -7,9 +7,12 @@
     {
         private ICollection<Product> adjacentProducts;
 
+        private ICollection<Picture> pictures;
+
         public Product()
         {
             this.adjacentProducts = new HashSet<Product>();
+            this.pictures = new HashSet<Picture>();
         }
 
         public int Id { get; set; }
@@ -38,6 +41,30 @@
 
         public string Effect { get; set; }
 
-        public virtual ICollection<Product> AdjacentProducts { get; set; }
+        public virtual Picture Logo { get; set; }
+
+        public virtual ICollection<Product> AdjacentProducts
+        {
+            get
+            {
+                return this.adjacentProducts;
+            }
+            set
+            {
+                this.adjacentProducts = value;
+            }
+        }
+
+        public virtual ICollection<Picture> Pictures
+        {
+            get
+            {
+                return this.pictures;
+            }
+            set
+            {
+                this.pictures = value;
+            }
+        }
     }
 }
