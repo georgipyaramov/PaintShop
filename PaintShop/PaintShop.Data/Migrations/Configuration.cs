@@ -16,9 +16,9 @@ namespace PaintShop.Data.Migrations
 
         protected override void Seed(PaintShopDbContext context)
         {
-            context.Categories.AddOrUpdate(new Category() { Name = "Interior" });
+            //context.Categories.AddOrUpdate(new Category() { Name = "Interior" });
 
-            context.SaveChanges();
+            //context.SaveChanges();
         }
     }
 }

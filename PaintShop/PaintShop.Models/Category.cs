@@ -5,16 +5,19 @@
 
     public class Category
     {
-        private ICollection<Product> products;
+
         public Category()
         {
-            this.products = new HashSet<Product>();
+            this.Products = new HashSet<Product>();
+            this.Types = new HashSet<Type>();
         }
 
         public int Id { get; set; }
 
         [Required]
         public string Name { get; set; }
+
+        public virtual ICollection<Type> Types { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
     }

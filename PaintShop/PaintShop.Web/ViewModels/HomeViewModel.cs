@@ -1,22 +1,14 @@
 ﻿namespace PaintShop.Web.ViewModels
 {
     using System.Collections.Generic;
+    using PaintShop.Models;
 
     public class HomeViewModel
     {
         public HomeViewModel()
         {
-            this.TopProducts = new List<string>()
-            {
-                "Aureum",
-                "Kreos Fil Pose",
-                "Imperium",
-                "Raffaello",
-                "Travertino Romano",
-                "Ottocento"
-            };
         }
 
-        public IEnumerable<string> TopProducts { get; set; }
+        public IEnumerable<Product> TopProducts { get; set; }
     }
 }

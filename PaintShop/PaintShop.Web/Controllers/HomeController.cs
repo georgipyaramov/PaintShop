@@ -9,18 +9,37 @@ using System.Web.Mvc;
 
 namespace PaintShop.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private PaintShopDbContext db;
-
-        public HomeController()
+        public HomeController(IPaintShopData data)
+            :base(data)
         {
-            this.db = new PaintShopDbContext();
         }
-
+        
         public ActionResult Index()
         {
-            return View(new HomeViewModel());
+            var products = this.Data.Products.All().ToList();
+
+            var viewModel = new HomeViewModel();
+            viewModel.TopProducts = products;
+
+            return View(viewModel);
+        }
+
+        public ActionResult TopProducts(int? id)
+        {
+            Product product = null;
+
+            if (id != null)
+            {
+                product = this.Data.Products.Find(id);
+            }
+            else
+            {
+                product = this.Data.Products.All().Where(p => p.Rating == 5).FirstOrDefault();
+            }
+            
+            return PartialView("_PictureGridPartial", product.Pictures.ToList());
         }
     }
 }

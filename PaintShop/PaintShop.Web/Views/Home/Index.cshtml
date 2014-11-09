@@ -1,35 +1,33 @@
-﻿@model PaintShop.Web.ViewModels.HomeViewModel
+﻿@using PaintShop.Web.Helpers
+@using PaintShop.Web.ViewModels
+
+@model HomeViewModel
+
 @{
     ViewBag.Title = "Home";
 }
 
 <div class="row body">
 
-    <aside class="col-sm-3">
-        <ul>
-            @foreach (var product in @Model.TopProducts)
-            {
-                <li>@product</li>
-            }
-        </ul>
+    <aside class="col-sm-3 full-height">
+        @foreach (var product in @Model.TopProducts)
+        {
+            <div class="row no-over top-product-link">
+                @Ajax.ImageActionLink(Url.Content(product.Logo.Path), product.Name, "TopProducts", "Home",
+                    new { id = product.Id },
+                    new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "pictures-grid" })
+            </div>
+        }
     </aside>
 
-    <div class="col-sm-9 pics-body">
-        <div class="row">
-            <div class="col-sm-9 img-1">
-                <img src="~/Imgs/interior-design-1-480x302.jpg" />
-            </div>
-            <div class="col-sm-3 img-2">
-                <img src="~/Imgs/interior-design-10-480x414.jpg" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6 img-bottom">
-                <img src="~/Imgs/interior-design-11-480x286.jpg" />
-            </div>
-            <div class="col-sm-6 img-bottom">
-                <img src="~/Imgs/interior-design-3-480x300.jpg" />
-            </div>
-        </div>
+    <div id="pictures-grid">
+        @{
+            Html.RenderAction("TopProducts");
+        }
     </div>
+
 </div>
+
+@section Unobtrusive{
+    @Scripts.Render("~/bundles/jqueryajax")
+}

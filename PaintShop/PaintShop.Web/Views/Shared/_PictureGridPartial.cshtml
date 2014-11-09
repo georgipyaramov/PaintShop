@@ -1,0 +1,20 @@
+﻿@model IList<PaintShop.Models.Picture>
+
+<div class="col-sm-9 pics-body">
+    <div class="row">
+        <div class="col-sm-9 img-1">
+            <img src="@Url.Content(Model[1].Path)" alt="@Model[1].Name" />
+        </div>
+        <div class="col-sm-3 img-2">
+            <img src="@Url.Content(Model[2].Path)" alt="@Model[2].Name" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 img-bottom">
+            <img src="@Url.Content(Model[3].Path)" alt="@Model[3].Name" />
+        </div>
+        <div class="col-sm-6 img-bottom">
+            <img src="@Url.Content(Model[2].Path)" alt="@Model[2].Name" />
+        </div>
+    </div>
+</div>

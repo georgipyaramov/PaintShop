@@ -5,10 +5,10 @@
 
     public class Type
     {
-        private ICollection<Product> products;
         public Type()
         {
-            this.products = new HashSet<Product>();
+            this.Products = new HashSet<Product>();
+            this.Categories = new HashSet<Category>();
         }
 
         public int Id { get; set; }
@@ -17,5 +17,7 @@
         public string Name { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
+
+        public virtual ICollection<Category> Categories { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: black;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -38,6 +39,10 @@ img {
     height: 100%;
 }
 
+.img-1 {
+    height: 345px;
+}
+
 .img-2 {
     height: 345px;
 }
@@ -54,4 +59,30 @@ img {
     height: 100%;
 }
 
+li {
+    list-style: none;
+}
+
+aside {
+    border: 2px solid green;
+}
+
+.no-over {
+    max-height: 13%;
+}
+
+hr {
+    border: 1px solid green;
+}
+
+.navbar-inverse {
+    background-color:green;
+    color: white;
+}
+
+.top-product-link:hover {
+    border-left: 3px solid green;
+    border-right: 3px solid green;
+    border: 3px solid green;
+}
 
