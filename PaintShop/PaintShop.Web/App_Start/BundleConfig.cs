@@ -36,7 +36,7 @@ namespace PaintShop.Web
 
             bundles.Add(new StyleBundle("~/Content/kendo/css").Include(
                       "~/Content/kendo/kendo.common-bootstrap.min.css",
-                      "~/Content/kendo/kendo.bootstrap.min.css"));
+                      "~/Content/kendo/kendo.metro.min.css"));
 
             bundles.IgnoreList.Clear();
             // Set EnableOptimizations to false for debugging. For more information,

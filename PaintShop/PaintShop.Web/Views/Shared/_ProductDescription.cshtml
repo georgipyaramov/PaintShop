@@ -1,0 +1,10 @@
+﻿@model PaintShop.Web.ViewModels.ProductViewModel
+
+<div class="row product-picture">
+    <img src="@Url.Content(@Model.Pictures.Where(p => !p.IsLogo).FirstOrDefault().Path)" alt="(@Model.Name) picture" />
+</div>
+<div class="row">
+    <p>
+        @Model.Description
+    </p>
+</div>

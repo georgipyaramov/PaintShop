@@ -1,9 +1,10 @@
 ﻿namespace PaintShop.Models
 {
+    using PaintShop.Contracts;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class ProductColorPackagePrice
+    public class ProductColorPackagePrice : DeletableEntity
     {
         public ProductColorPackagePrice()
         {

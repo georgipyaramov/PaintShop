@@ -8,7 +8,6 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/kendo")
 
 </head>
 <body>
@@ -24,11 +23,13 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Products", "Index", "Products")</li>
-                    <li>@Html.ActionLink("Services", "Index", "Services")</li>
-                    <li>@Html.ActionLink("Gallery", "Index", "Gallery")</li>
-                    <li>@Html.ActionLink("About Us", "Contact", "About")</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { })</li>
+                    <li>@Html.ActionLink("Products", "Index", "Products", new { area = "" }, new { })</li>
+                    <li>@Html.ActionLink("About Us", "Contact", "About", new { area = "" }, new { })</li>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li>@Html.ActionLink("Administration", "Index", "Products", new { area = "Administration" }, new { })</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -45,6 +46,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/kendo")
+    @Scripts.Render("~/bundles/jqueryval");
     @RenderSection("scripts", required: false)
     @RenderSection("Unobtrusive", required: false)
 </body>

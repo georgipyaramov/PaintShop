@@ -1,0 +1,23 @@
+﻿@{
+    const string ControllerName = "Products";
+    const string ReadAction = "ReadTypes";
+}
+
+@(Html.Kendo()
+      .DropDownList()
+      .Name("ProductType")
+      .DataValueField("Id")
+      .DataTextField("Name")
+      .DataSource(source =>
+      {
+          source.Read(read =>
+          {
+              read.Action(ReadAction, ControllerName);
+              read.Data("filterTypes");
+              read.Type(HttpVerbs.Post);
+          })
+          .ServerFiltering(true);
+      })
+      .CascadeFrom("Category")
+)
+

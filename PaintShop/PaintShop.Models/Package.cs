@@ -1,8 +1,9 @@
 ﻿namespace PaintShop.Models
 {
+    using PaintShop.Contracts;
     using System.ComponentModel.DataAnnotations;
 
-    public class Package
+    public class Package : DeletableEntity
     {
         public Package()
         {

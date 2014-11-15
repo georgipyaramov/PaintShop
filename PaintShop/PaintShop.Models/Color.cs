@@ -1,8 +1,9 @@
 ﻿namespace PaintShop.Models
 {
+    using PaintShop.Contracts;
     using System.ComponentModel.DataAnnotations;
 
-    public class Color
+    public class Color : DeletableEntity
     {
         public Color()
         {

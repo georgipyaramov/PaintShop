@@ -1,0 +1,17 @@
+﻿@{
+    const string ControllerName = "Products";
+    const string ActionName = "ReadAdjacentProducts";
+}
+
+@(Html.Kendo()
+      .MultiSelect()
+      .Name("AdjacentProducts")
+      .DataTextField("Name")
+      .DataValueField("Id")
+      .DataSource(source =>
+      {
+          source.Read(read => read.Action("ReadAdjacentProducts", ControllerName))
+              .ServerFiltering(true);
+      })
+      
+)

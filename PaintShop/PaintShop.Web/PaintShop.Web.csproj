@@ -182,24 +182,32 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
+    <Compile Include="Areas\Administration\Controllers\Base\AdministrationController.cs" />
     <Compile Include="Areas\Administration\Controllers\ProductsController.cs" />
-    <Compile Include="Areas\Administration\ViewModels\ProductsViewModel.cs" />
-    <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\Base\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
-    <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ImageActionLinkHelper.cs" />
+    <Compile Include="Infrastructure\Mapping\AutoMapperConfig.cs" />
+    <Compile Include="Infrastructure\Mapping\IHaveCustomMappings.cs" />
+    <Compile Include="Infrastructure\Mapping\IMapFrom.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AdjacentProductViewModel.cs" />
+    <Compile Include="ViewModels\ProductsTreeViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\ProductsTreeViewModels\ProductViewModel.cs" />
+    <Compile Include="ViewModels\ProductsTreeViewModels\ProductTypeViewModel.cs" />
+    <Compile Include="ViewModels\SimpleCategoryViewModel.cs" />
+    <Compile Include="ViewModels\SimpleProductTypeViewModel.cs" />
+    <Compile Include="ViewModels\SimpleProductViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -1101,13 +1109,15 @@
     <Content Include="Scripts\kendo\kendo.view.min.js.map" />
     <Content Include="Scripts\kendo\kendo.web.min.js.map" />
     <Content Include="Scripts\kendo\kendo.window.min.js.map" />
+    <Content Include="Views\Shared\_ProductDescription.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CategoryViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\TypeViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AjacentProductsEditor.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\AdjacentProducts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Administration\Models\" />
-    <Folder Include="ViewModels\Products\" />
-    <Folder Include="Views\About\" />
-    <Folder Include="Views\Services\" />
+    <Folder Include="Areas\Administration\ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1117,6 +1127,14 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PaintShop.Common\PaintShop.Common.csproj">
+      <Project>{d0479029-b157-443d-9377-10f6ca36b635}</Project>
+      <Name>PaintShop.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PaintShop.Contracts\PaintShop.Contracts.csproj">
+      <Project>{cdeb068a-3dc6-49ad-ba3c-7383d1d62a9a}</Project>
+      <Name>PaintShop.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PaintShop.Data\PaintShop.Data.csproj">
       <Project>{7b7ae7b7-c513-403a-b07b-3c377bc40cff}</Project>
       <Name>PaintShop.Data</Name>

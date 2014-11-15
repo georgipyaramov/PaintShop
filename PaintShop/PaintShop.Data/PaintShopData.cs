@@ -6,6 +6,8 @@
 
     using PaintShop.Data.Repositories;
     using PaintShop.Models;
+    using PaintShop.Contracts;
+    using PaintShop.Data.Repositories.Base;
 
     public class PaintShopData : IPaintShopData
     {
@@ -18,7 +20,7 @@
             this.repositories = new Dictionary<System.Type, object>();
         }
 
-        public IRepository<PaintShopUser> Users
+        public Contracts.IRepository<PaintShopUser> Users
         {
             get 
             {
@@ -26,59 +28,59 @@
             }
         }
 
-        public IRepository<Models.Type> Types
+        public IDeletableEntityRepository<Models.ProductType> Types
         {
             get
             {
-                return this.GetRepository<Models.Type>();
+                return this.GetDeletableEntityRepository<Models.ProductType>();
             }
         }
 
-        public IRepository<Category> Categories
+        public IDeletableEntityRepository<Category> Categories
         {
             get
             {
-                return this.GetRepository<Category>();
+                return this.GetDeletableEntityRepository<Category>();
             }
         }
 
-        public IRepository<Color> Colors
+        public IDeletableEntityRepository<Color> Colors
         {
             get
             {
-                return this.GetRepository<Color>();
+                return this.GetDeletableEntityRepository<Color>();
             }
         }
 
-        public IRepository<Product> Products
+        public IDeletableEntityRepository<Product> Products
         {
             get
             {
-                return this.GetRepository<Product>();
+                return this.GetDeletableEntityRepository<Product>();
             }
         }
 
-        public IRepository<Package> Packages
+        public IDeletableEntityRepository<Package> Packages
         {
             get
             {
-                return this.GetRepository<Package>();
+                return this.GetDeletableEntityRepository<Package>();
             }
         }
 
-        public IRepository<ProductColorPackagePrice> ProductsColorsPackagesPrices
+        public IDeletableEntityRepository<ProductColorPackagePrice> ProductsColorsPackagesPrices
         {
             get
             {
-                return this.GetRepository<ProductColorPackagePrice>();
+                return this.GetDeletableEntityRepository<ProductColorPackagePrice>();
             }
         }
 
-        public IRepository<Picture> Pictures
+        public IDeletableEntityRepository<Picture> Pictures
         {
             get
             {
-                return this.GetRepository<Picture>();
+                return this.GetDeletableEntityRepository<Picture>();
             }
         }
 
@@ -87,19 +89,27 @@
             return this.context.SaveChanges();
         }
 
-        private IRepository<T> GetRepository<T>() where T : class
+        private Contracts.IRepository<T> GetRepository<T>() where T : class
         {
             var typeOfRepository = typeof(T);
             if (!this.repositories.ContainsKey(typeOfRepository))
             {
-                var newRepository = Activator.CreateInstance(typeof(EFRepository<T>), context);
+                var newRepository = Activator.CreateInstance(typeof(GenericRepository<T>), context);
                 this.repositories.Add(typeOfRepository, newRepository);
             }
 
-            return (IRepository<T>)this.repositories[typeOfRepository];
+            return (Contracts.IRepository<T>)this.repositories[typeOfRepository];
         }
 
+        private IDeletableEntityRepository<T> GetDeletableEntityRepository<T>() where T : class, IDeletableEntity
+        {
+            if (!this.repositories.ContainsKey(typeof(T)))
+            {
+                var type = typeof(DeletableEntityRepository<T>);
+                this.repositories.Add(typeof(T), Activator.CreateInstance(type, this.context));
+            }
 
-        
+            return (IDeletableEntityRepository<T>)this.repositories[typeof(T)];
+        }
     }
 }

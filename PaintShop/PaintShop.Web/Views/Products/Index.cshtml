@@ -1,4 +1,6 @@
-﻿
+﻿@model IEnumerable<PaintShop.Web.ViewModels.CategoryViewModel>
+@using Kendo.Mvc.UI.Fluent
+@using PaintShop.Web.ViewModels;
 
 @{
     ViewBag.Title = "Index";
@@ -7,19 +9,39 @@
 <div class="row body">
 
     <aside class="col-sm-3 full-height">
+        @(Html.Kendo().TreeView()
+            .Name("treeViewProductsNav")
+            .BindTo(Model, (NavigationBindingFactory<TreeViewItem> mappings) =>
+                {
+                    mappings.For<CategoryViewModel>(binding => binding.ItemDataBound((item, category) =>
+                        {
+                            item.Text = category.Name;
+                        })
+                        .Children(category => category.Types));
 
+                    mappings.For<ProductTypeViewModel>(binding => binding.ItemDataBound((item, type) =>
+                        {
+                            item.Text = type.Name;
+                        })
+                        .Children(type => type.Products));
+
+                    mappings.For<ProductViewModel>(binding => binding.ItemDataBound((item, product) =>
+                        {
+                            item.Text = product.Name;
+                            item.Url = "/Products/Description/" + product.Id;
+                            item.LinkHtmlAttributes.Add("data-ajax", "true");
+                            item.LinkHtmlAttributes.Add("data-ajax-method", "GET");
+                            item.LinkHtmlAttributes.Add("data-ajax-mode", "replace");
+                            item.LinkHtmlAttributes.Add("data-ajax-update", "#product-description");
+                        }));
+                })
+        )
     </aside>
 
 
-    <div class="col-sm-9">
-        <div class="row product-picture">
-            <img src="path/product-pic-id" alt="asdasd" />
-        </div>
-        <div class="row">
-            <p>
-                description
-            </p>
-        </div>
+
+
+    <div id="product-description" class="col-sm-9">
     </div>
 
 </div>

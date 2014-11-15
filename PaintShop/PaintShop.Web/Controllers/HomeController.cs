@@ -1,14 +1,16 @@
-﻿using PaintShop.Data;
-using PaintShop.Models;
-using PaintShop.Web.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace PaintShop.Web.Controllers
+﻿namespace PaintShop.Web.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+
+    using PaintShop.Data;
+    using PaintShop.Models;
+    using PaintShop.Web.Controllers.Base;
+    using PaintShop.Web.ViewModels;
+
     public class HomeController : BaseController
     {
         public HomeController(IPaintShopData data)
@@ -18,7 +20,7 @@ namespace PaintShop.Web.Controllers
         
         public ActionResult Index()
         {
-            var products = this.Data.Products.All().ToList();
+            var products = this.Data.Products.All().Where(p => p.Rating == 5).ToList();
 
             var viewModel = new HomeViewModel();
             viewModel.TopProducts = products;
@@ -32,7 +34,7 @@ namespace PaintShop.Web.Controllers
 
             if (id != null)
             {
-                product = this.Data.Products.Find(id);
+                product = this.Data.Products.GetById(id);
             }
             else
             {

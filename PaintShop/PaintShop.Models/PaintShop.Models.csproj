@@ -61,11 +61,17 @@
     <Compile Include="Product.cs" />
     <Compile Include="ProductColorPackagePrice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Type.cs" />
+    <Compile Include="ProductType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PaintShop.Contracts\PaintShop.Contracts.csproj">
+      <Project>{cdeb068a-3dc6-49ad-ba3c-7383d1d62a9a}</Project>
+      <Name>PaintShop.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

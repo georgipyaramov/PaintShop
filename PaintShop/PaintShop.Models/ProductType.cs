@@ -1,11 +1,12 @@
 ﻿namespace PaintShop.Models
 {
+    using PaintShop.Contracts;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class Type
+    public class ProductType : DeletableEntity
     {
-        public Type()
+        public ProductType()
         {
             this.Products = new HashSet<Product>();
             this.Categories = new HashSet<Category>();

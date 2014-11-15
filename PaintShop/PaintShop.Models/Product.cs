@@ -2,16 +2,20 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using PaintShop.Contracts;
 
-    public class Product
+    public class Product : DeletableEntity
     {
         private ICollection<Product> adjacentProducts;
+
+        private ICollection<Product> adjacentTo;
 
         private ICollection<Picture> pictures;
 
         public Product()
         {
             this.adjacentProducts = new HashSet<Product>();
+            this.adjacentTo = new HashSet<Product>();
             this.pictures = new HashSet<Picture>();
         }
 
@@ -29,9 +33,9 @@
         public virtual Category Category { get; set; }
 
         [Required]
-        public int TypeId { get; set; }
+        public int ProductTypeId { get; set; }
 
-        public virtual Type Type { get; set; }
+        public virtual ProductType ProductType { get; set; }
 
         public double Consumtion { get; set; }
 
@@ -52,6 +56,18 @@
             set
             {
                 this.adjacentProducts = value;
+            }
+        }
+
+        public virtual ICollection<Product> AdjacentTo
+        {
+            get
+            {
+                return this.adjacentTo;
+            }
+            set
+            {
+                this.adjacentTo = value;
             }
         }
 

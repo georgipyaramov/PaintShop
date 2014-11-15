@@ -1,25 +1,26 @@
 ﻿namespace PaintShop.Data
 {
+    using PaintShop.Contracts;
     using PaintShop.Data.Repositories;
     using PaintShop.Models;
 
     public interface IPaintShopData
     {
-        IRepository<PaintShopUser> Users { get; }
+        Contracts.IRepository<PaintShopUser> Users { get; }
 
-        IRepository<Type> Types { get; }
+        IDeletableEntityRepository<ProductType> Types { get; }
 
-        IRepository<Category> Categories { get; }
+        IDeletableEntityRepository<Category> Categories { get; }
 
-        IRepository<Color> Colors { get; }
+        IDeletableEntityRepository<Color> Colors { get; }
 
-        IRepository<Product> Products { get; }
+        IDeletableEntityRepository<Product> Products { get; }
 
-        IRepository<Package> Packages { get; }
+        IDeletableEntityRepository<Package> Packages { get; }
 
-        IRepository<ProductColorPackagePrice> ProductsColorsPackagesPrices { get; }
+        IDeletableEntityRepository<ProductColorPackagePrice> ProductsColorsPackagesPrices { get; }
 
-        IRepository<Picture> Pictures { get; }
+        IDeletableEntityRepository<Picture> Pictures { get; }
 
         int SaveChanges();
     }

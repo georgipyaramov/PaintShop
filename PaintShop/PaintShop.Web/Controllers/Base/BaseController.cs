@@ -1,4 +1,4 @@
-﻿namespace PaintShop.Web.Controllers
+﻿namespace PaintShop.Web.Controllers.Base
 {
     using PaintShop.Data;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-    public class BaseController : Controller
+    public abstract class BaseController : Controller
     {
         public BaseController(IPaintShopData data)
         {

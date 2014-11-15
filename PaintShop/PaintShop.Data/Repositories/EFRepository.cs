@@ -14,40 +14,40 @@
             this.set = context.Set<T>();
         }
 
-        public IQueryable<T> All()
+        public virtual IQueryable<T> All()
         {
             return this.set;
         }
 
-        public T Find(object id)
+        public virtual T Find(object id)
         {
             return this.set.Find(id);
         }
 
-        public void Add(T entity)
+        public virtual void Add(T entity)
         {
             this.ChangeState(entity, EntityState.Added);
         }
 
-        public void Update(T entity)
+        public virtual void Update(T entity)
         {
             this.ChangeState(entity, EntityState.Modified);
         }
 
-        public T Delete(T entity)
+        public virtual T Delete(T entity)
         {
             this.ChangeState(entity, EntityState.Deleted);
             return entity;
         }
 
-        public T Delete(object id)
+        public virtual T Delete(object id)
         {
             var entity = this.Find(id);
             this.Delete(entity);
             return entity;
         }
 
-        public int SaveChanges()
+        public virtual int SaveChanges()
         {
             return this.context.SaveChanges();
         }
