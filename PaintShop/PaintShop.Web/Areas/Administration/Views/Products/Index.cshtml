@@ -14,8 +14,8 @@
         cols.Bound(pr => pr.Id).Hidden();
         cols.Bound(pr => pr.ProductIdentificator).Title("Identificator");
         cols.Bound(pr => pr.Name);
-        cols.Bound(pr => pr.Category).ClientTemplate("#=Category.Name#").Title("Category");
-        cols.Bound(pr => pr.ProductType).ClientTemplate("#=ProductType.Name#").Title("Type");
+        cols.Bound(pr => pr.Category).ClientTemplate("#=Category.Name#").ClientGroupHeaderTemplate("Category: #=value.Name#").Title("Category");
+        cols.Bound(pr => pr.ProductType).ClientTemplate("#=ProductType.Name#").ClientGroupHeaderTemplate("Type: #=value.Name#").Title("Type");
         cols.Bound(pr => pr.Consumtion);
         cols.Bound(pr => pr.AdjacentProducts).ClientTemplate(
              "# for (var prod in AdjacentProducts) { #" +

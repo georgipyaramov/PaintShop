@@ -1,0 +1,66 @@
+﻿@model decimal
+@{
+    ViewBag.Title = "Calculator";
+    const string ControllerName = "Calculator";
+    const string ProductReadAction = "ReadProducts";
+    const string ColorReadAction = "ReadColors";
+}
+
+<h2>Calculator</h2>
+
+<div class="row">
+    @using (Html.BeginForm("Calculate", "Calculator", FormMethod.Post))
+    {
+        <div class="col-sm-2">
+            @(Html.Kendo()
+        .ComboBox()
+        .Name("Product")
+        .Filter("contains")
+        .AutoBind(false)
+        .MinLength(2)
+        .Placeholder("Enter product")
+        .DataTextField("ProductIdentificator")
+        .DataValueField("Id")
+        .DataSource(source =>
+        {
+            source.Read(read =>
+            {
+                read.Action(ProductReadAction, ControllerName);
+            });
+        })
+        .Suggest(true))
+        </div>
+
+        <div class="col-sm-2">
+            @(Html.Kendo()
+        .ComboBox()
+        .Name("Color")
+        .Filter("contains")
+        .AutoBind(false)
+        .MinLength(2)
+        .Placeholder("Enter color")
+        .DataTextField("ColorIdentificator")
+        .DataValueField("Id")
+        .DataSource(source =>
+        {
+            source.Read(read =>
+            {
+                read.Action(ColorReadAction, ControllerName);
+            });
+        })
+        .Suggest(true))
+        </div>
+        
+        <div class="col-sm-2">
+            <input type="number" step="any" name="Quadrature" />
+        </div>
+
+        <input type="submit" name="CalculatorFrom" />
+
+    }
+
+</div>
+<div>
+    <h2>@Model</h2>
+</div>
+

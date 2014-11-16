@@ -193,6 +193,12 @@
     <Compile Include="Areas\Administration\ViewModels\Packages\PackageViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\Prices\PricesViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\Products\ProductViewModel.cs" />
+    <Compile Include="Areas\Employees\Controllers\Base\EmployeesController.cs" />
+    <Compile Include="Areas\Employees\Controllers\CalculatorController.cs" />
+    <Compile Include="Areas\Employees\EmployeesAreaRegistration.cs" />
+    <Compile Include="Areas\Employees\ViewModels\Calculator\CalculationParametersInputModel.cs" />
+    <Compile Include="Areas\Employees\ViewModels\Calculator\ColorViewModel.cs" />
+    <Compile Include="Areas\Employees\ViewModels\Calculator\ProductWithPrIdViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Base\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -470,6 +476,10 @@
     <Content Include="Areas\Administration\Views\Prices\index.cshtml" />
     <Content Include="Areas\Administration\Views\Colors\index.cshtml" />
     <Content Include="Areas\Administration\Views\Packages\index.cshtml" />
+    <Content Include="Areas\Employees\Views\web.config" />
+    <Content Include="Areas\Employees\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Employees\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Employees\Views\Calculator\index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
