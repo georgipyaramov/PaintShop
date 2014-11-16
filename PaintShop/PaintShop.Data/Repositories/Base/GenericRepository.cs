@@ -13,7 +13,7 @@
     using PaintShop.Contracts;
     using PaintShop.Common.Extensions;
 
-    public class GenericRepository<T> : Contracts.IRepository<T> where T : class
+    public class GenericRepository<T> : IRepository<T> where T : class
     {
         public GenericRepository(DbContext context)
         {

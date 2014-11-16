@@ -20,7 +20,15 @@
             this.repositories = new Dictionary<System.Type, object>();
         }
 
-        public Contracts.IRepository<PaintShopUser> Users
+        public DbContext Context 
+        { 
+            get 
+            { 
+                return this.context; 
+            }
+        }
+
+        public IRepository<PaintShopUser> Users
         {
             get 
             {
@@ -89,7 +97,7 @@
             return this.context.SaveChanges();
         }
 
-        private Contracts.IRepository<T> GetRepository<T>() where T : class
+        private IRepository<T> GetRepository<T>() where T : class
         {
             var typeOfRepository = typeof(T);
             if (!this.repositories.ContainsKey(typeOfRepository))
@@ -98,7 +106,7 @@
                 this.repositories.Add(typeOfRepository, newRepository);
             }
 
-            return (Contracts.IRepository<T>)this.repositories[typeOfRepository];
+            return (IRepository<T>)this.repositories[typeOfRepository];
         }
 
         private IDeletableEntityRepository<T> GetDeletableEntityRepository<T>() where T : class, IDeletableEntity

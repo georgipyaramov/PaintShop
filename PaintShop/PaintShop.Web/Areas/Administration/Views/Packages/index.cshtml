@@ -1,0 +1,44 @@
+﻿@using PaintShop.Web.Areas.Administration.ViewModels.Packages;
+@{
+    ViewBag.Title = "Administration Packages";
+    const string ControllerName = "Packages";
+}    
+
+<h2>Administration Packages</h2>
+
+@(Html.Kendo()
+    .Grid<PackageViewModel>()
+    .Name("grid")
+    .Columns(cols =>
+    {
+        cols.Bound(pk => pk.Id).Hidden();
+        cols.Bound(pk => pk.Quantity);
+        cols.Bound(pk => pk.CreatedOn).Format("{0: dd-MM-yyyy HH:mm:ss}").Hidden();
+        cols.Bound(pk => pk.ModifiedOn).Format("{0: dd-MM-yyyy HH:mm:ss}").Hidden();
+        cols.Command(com => com.Edit()).Title("Промяна");
+        cols.Command(com => com.Destroy()).Title("Изтриване").Hidden();
+
+    })
+    .ColumnMenu()
+    .Resizable(conf => conf.Columns(true))
+    .Pageable(page => page.Refresh(true))
+    .Sortable()
+    .Groupable()
+    .Filterable()
+    .Editable(edit => edit.Mode(GridEditMode.InLine))
+    .ToolBar(toolbar => toolbar.Create())
+    .DataSource(data =>
+        data
+            .Ajax()
+            .Model(m =>
+                {
+                    m.Id(prod => prod.Id);
+                    m.Field(prod => prod.Id).Editable(false);
+
+                })
+            .Read(read => read.Action("Read", ControllerName))
+            .Create(create => create.Action("Create", ControllerName))
+            .Update(update => update.Action("Update", ControllerName))
+            .Destroy(destroy => destroy.Action("Destroy", ControllerName))
+            ))
+

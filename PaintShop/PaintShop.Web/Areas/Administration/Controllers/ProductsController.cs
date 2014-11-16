@@ -15,8 +15,12 @@
     using AutoMapper.QueryableExtensions;
     using PaintShop.Web.ViewModels;
     using PaintShop.Web.Areas.Administration.Controllers.Base;
+    using System.Collections;
 
-    public class ProductsController : AdministrationController
+    using Model = PaintShop.Models.Product;
+    using ViewModel = PaintShop.Web.Areas.Administration.ViewModels.Products.ProductViewModel;
+
+    public class ProductsController : KendoGridAdministrationController
     {
         public ProductsController(IPaintShopData data) : base(data)
         {
@@ -28,16 +32,11 @@
             return View();
         }
 
-        public ActionResult Read([DataSourceRequest]
-                                 DataSourceRequest request)
+        protected override IEnumerable GetData()
         {
-            var allProducts = this.Data.Products.All()
+            return this.Data.Products.All()
                                   .Project()
-                                  .To<SimpleProductViewModel>();
-
-            var result = allProducts.ToDataSourceResult(request);
-
-            return Json(result, JsonRequestBehavior.AllowGet);
+                                  .To<ViewModel>();
         }
 
         public ActionResult ReadCategories()
@@ -68,37 +67,34 @@
             return Json(products, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
         public ActionResult Create([DataSourceRequest]
-                                   DataSourceRequest request, SimpleProductViewModel model)
+                                   DataSourceRequest request, ViewModel model)
         {
-            if (model != null && ModelState.IsValid)
-            {
-                var productDbModel = Mapper.Map<Product>(model);
-                this.Data.Products.Add(productDbModel);
-                this.Data.SaveChanges();
-            }
-
-            return Json(new[] { model }.ToDataSourceResult(request, ModelState));
+            var dbModel = base.Create<Model>(model);
+            if (dbModel != null) model.Id = dbModel.Id;
+            return this.GridOperation(model, request);
         }
 
         public ActionResult Update([DataSourceRequest]
-                                   DataSourceRequest request, SimpleProductViewModel model)
+                                   DataSourceRequest request, ViewModel model)
         {
             if (model != null && ModelState.IsValid)
             {
                 var productDbModel = this.Data.Products.GetById(model.Id);
-
                 Mapper.Map(model, productDbModel);
                 this.UpdateAdjacentProducts(productDbModel, model);
+                this.UpdateCategory(productDbModel, model);
+                this.UpdateProductType(productDbModel, model);
 
                 this.Data.SaveChanges();
             }
 
-            return Json(new[] { model }.ToDataSourceResult(request, ModelState));
+            return this.GridOperation(model, request);
         }
 
         public ActionResult Destroy([DataSourceRequest]
-                                   DataSourceRequest request, SimpleProductViewModel model)
+                                   DataSourceRequest request, ViewModel model)
         {
             if (model != null && ModelState.IsValid)
             {
@@ -109,7 +105,19 @@
             return Json(new[] { model }.ToDataSourceResult(request, ModelState));
         }
 
-        private void UpdateAdjacentProducts(Product productDbModel, SimpleProductViewModel model)
+        protected override T GetById<T>(object id)
+        {
+            return this.Data.Products.GetById(id) as T;
+        }
+
+        protected override void CreateCustomBindings(object dbModel, object model)
+        {
+            this.UpdateCategory((Model)dbModel, (ViewModel)model);
+            this.UpdateProductType((Model)dbModel, (ViewModel)model);
+            this.UpdateAdjacentProducts((Model)dbModel, (ViewModel)model);
+        }
+
+        private void UpdateAdjacentProducts(Model dbModel, ViewModel model)
         {
             var adjProds = new List<Product>();
 
@@ -117,12 +125,26 @@
             {
                 foreach (var item in model.AdjacentProducts)
                 {
-                    var prod = this.Data.Products.GetById(item.Id);
+                    var allProducts = this.Data.Products.All().ToList(); 
+                    var prod = this.Data.Products.All().Where(x => x.Id == item.Id).FirstOrDefault();
                     adjProds.Add(prod);
                 }
             }
 
-            productDbModel.AdjacentProducts = adjProds;
+            dbModel.AdjacentProducts = adjProds;
+        }
+
+        private void UpdateCategory(Model dbModel, ViewModel model)
+        {
+            var category = this.Data.Categories.GetById(model.Category.Id);
+            dbModel.Category = category;
+        }
+
+        private void UpdateProductType(Model dbModel, ViewModel model)
+        {
+            var productType = this.Data.Types
+                .GetById(model.ProductType.Id);
+            dbModel.ProductType = productType;
         }
     }
 }

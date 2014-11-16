@@ -3,10 +3,13 @@
     using PaintShop.Contracts;
     using PaintShop.Data.Repositories;
     using PaintShop.Models;
+using System.Data.Entity;
 
     public interface IPaintShopData
     {
-        Contracts.IRepository<PaintShopUser> Users { get; }
+        DbContext Context { get; }
+
+        IRepository<PaintShopUser> Users { get; }
 
         IDeletableEntityRepository<ProductType> Types { get; }
 

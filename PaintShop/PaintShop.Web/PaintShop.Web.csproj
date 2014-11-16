@@ -183,7 +183,16 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\Base\AdministrationController.cs" />
+    <Compile Include="Areas\Administration\Controllers\Base\KendoGridAdministrationController.cs" />
+    <Compile Include="Areas\Administration\Controllers\ColorsController.cs" />
+    <Compile Include="Areas\Administration\Controllers\PackagesController.cs" />
+    <Compile Include="Areas\Administration\Controllers\PricesController.cs" />
     <Compile Include="Areas\Administration\Controllers\ProductsController.cs" />
+    <Compile Include="Areas\Administration\ViewModels\Base\AdministrationViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\Colors\ColorViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\Packages\PackageViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\Prices\PricesViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\Products\ProductViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Base\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -193,6 +202,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ImageActionLinkHelper.cs" />
+    <Compile Include="Infrastructure\CustomModelBinders\JsonDateTimeModelBinder.cs" />
     <Compile Include="Infrastructure\Mapping\AutoMapperConfig.cs" />
     <Compile Include="Infrastructure\Mapping\IHaveCustomMappings.cs" />
     <Compile Include="Infrastructure\Mapping\IMapFrom.cs" />
@@ -201,6 +211,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AdjacentProductViewModel.cs" />
+    <Compile Include="ViewModels\BasicProductViewModel.cs" />
     <Compile Include="ViewModels\ProductsTreeViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\ProductsTreeViewModels\ProductViewModel.cs" />
@@ -456,6 +467,9 @@
     <Content Include="Areas\Administration\Views\Products\Index.cshtml" />
     <Content Include="Content\kendo\images\kendoui.ttf" />
     <Content Include="Content\kendo\images\kendoui.woff" />
+    <Content Include="Areas\Administration\Views\Prices\index.cshtml" />
+    <Content Include="Areas\Administration\Views\Colors\index.cshtml" />
+    <Content Include="Areas\Administration\Views\Packages\index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -1114,10 +1128,12 @@
     <Content Include="Views\Shared\EditorTemplates\TypeViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AjacentProductsEditor.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\AdjacentProducts.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ColorEditor.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\BasicProductEditor.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\PackageEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Administration\ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

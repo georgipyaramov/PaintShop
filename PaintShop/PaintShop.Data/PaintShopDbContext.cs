@@ -52,6 +52,7 @@
         private void ApplyAuditInfoRules()
         {
             // Approach via @julielerman: http://bit.ly/123661P
+            var shit = this.ChangeTracker.Entries().ToList();
             foreach (var entry in
                 this.ChangeTracker.Entries()
                     .Where(

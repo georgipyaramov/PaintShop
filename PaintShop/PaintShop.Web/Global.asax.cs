@@ -1,7 +1,10 @@
-﻿using PaintShop.Web.Infrastructure.Mapping;
+﻿using PaintShop.Web.Infrastructure.CustomModelBinders;
+using PaintShop.Web.Infrastructure.Mapping;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -13,6 +16,9 @@ namespace PaintShop.Web
     {
         protected void Application_Start()
         {
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            ModelBinders.Binders.Add(typeof(DateTime), new JsonDateTimeModelBinder());
+            ModelBinders.Binders.Add(typeof(Nullable<DateTime>), new JsonDateTimeModelBinder());
             AutoMapperConfig.Execute();
 
             AreaRegistration.RegisterAllAreas();

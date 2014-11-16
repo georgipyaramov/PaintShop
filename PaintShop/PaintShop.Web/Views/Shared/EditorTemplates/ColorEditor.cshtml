@@ -1,0 +1,24 @@
+﻿@{
+    const string ControllerName = "Prices";
+    const string ReadAction = "ReadColors";
+}
+
+@(Html.Kendo()
+      .ComboBox()
+      .Name("Color")
+      .Filter("contains")
+      .AutoBind(false)
+      .MinLength(3)
+      .Placeholder("Enter color")
+      .DataTextField("ColorIdentificator")
+      .DataValueField("Id")
+      .DataSource(source =>
+      {
+          source.Read(read =>
+          {
+              read.Action(ReadAction, ControllerName);
+          })
+                .ServerFiltering(true);
+      })
+      .Suggest(true)
+)

@@ -1,12 +1,13 @@
-﻿@using PaintShop.Web.ViewModels;
+﻿@using PaintShop.Web.Areas.Administration.ViewModels.Products;
 @{
+    ViewBag.Title = "Administration Products";
     const string ControllerName = "Products";
 }
 <h2>Administration Products</h2>
 
 
 @(Html.Kendo()
-    .Grid<SimpleProductViewModel>()
+    .Grid<ProductViewModel>()
     .Name("grid")
     .Columns(cols =>
     {
@@ -21,11 +22,11 @@
                 "# if (AdjacentProducts[prod].Name) { #" +
                     "#=AdjacentProducts[prod].Name# " +
                 "# } #" +
-                //"# } else { #" +
-                //"No adjacent products" +
-            "# } #"
-);
+            "# } #");
+        cols.Bound(pr => pr.Description).Hidden();
         cols.Bound(pr => pr.Effect).Hidden();
+        cols.Bound(pr => pr.CreatedOn).Format("{0: dd-MM-yyyy HH:mm:ss}").Hidden();
+        cols.Bound(pr => pr.ModifiedOn).Format("{0: dd-MM-yyyy HH:mm:ss}").Hidden();
         cols.Command(com => com.Edit()).Title("Промяна");
         cols.Command(com => com.Destroy()).Title("Изтриване").Hidden();
         
@@ -44,9 +45,9 @@
             .Model(m => 
                 {
                     m.Id(prod => prod.Id);
-                    m.Field(prod => prod.Category).DefaultValue(new SimpleCategoryViewModel());
-                    m.Field(prod => prod.ProductType).DefaultValue(new SimpleProductTypeViewModel());
-                    m.Field(prod => prod.AdjacentProducts).DefaultValue(new List<AdjacentProductViewModel>());
+                    m.Field(prod => prod.Category).DefaultValue(new PaintShop.Web.ViewModels.SimpleCategoryViewModel());
+                    m.Field(prod => prod.ProductType).DefaultValue(new PaintShop.Web.ViewModels.SimpleProductTypeViewModel());
+                    m.Field(prod => prod.AdjacentProducts).DefaultValue(new List<PaintShop.Web.ViewModels.AdjacentProductViewModel>());
                     m.Field(prod => prod.Id).Editable(false);
                     
                 })

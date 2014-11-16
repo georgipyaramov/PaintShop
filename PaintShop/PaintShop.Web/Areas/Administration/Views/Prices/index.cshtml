@@ -1,0 +1,62 @@
+﻿
+@using PaintShop.Web.Areas.Administration.ViewModels.Colors;
+@using PaintShop.Web.Areas.Administration.ViewModels.Packages;
+@using PaintShop.Web.Areas.Administration.ViewModels.Prices;
+@using PaintShop.Web.ViewModels;
+
+@{
+    ViewBag.Title = "Administration Prices";
+    const string ControllerName = "Prices";
+}
+<h2>Administration Prices</h2>
+
+
+@(Html.Kendo()
+    .Grid<PricesViewModel>()
+    .Name("grid")
+    .Columns(cols =>
+    {
+        cols.Bound(pr => pr.Id).Hidden();
+        cols.Bound(pr => pr.Product).ClientTemplate("#=Product.Name#").ClientGroupHeaderTemplate("Product: #=value.Name#");
+        cols.Bound(pr => pr.Color).ClientTemplate("#=Color.ColorIdentificator#").ClientGroupHeaderTemplate("Color: #=value.ColorIdentificator#");
+        cols.Bound(pr => pr.Package).ClientTemplate("#=Package.Quantity# l; kg / m2").ClientGroupHeaderTemplate("Package: #=value.Quantity# l; kg");
+        cols.Bound(pr => pr.Price);
+        cols.Bound(pr => pr.CreatedOn).Format("{0: dd-MM-yyyy HH:mm:ss}").Hidden();
+        cols.Bound(pr => pr.ModifiedOn).Format("{0: dd-MM-yyyy HH:mm:ss}").Hidden();
+        cols.Command(com => com.Edit()).Title("Промяна");
+        cols.Command(com => com.Destroy()).Title("Изтриване").Hidden();
+
+    })
+    .ColumnMenu()
+    .Resizable(conf => conf.Columns(true))
+    .Pageable(page => page.Refresh(true))
+    .Sortable()
+    .Groupable()
+    .Filterable()
+    .Editable(edit => edit.Mode(GridEditMode.InLine))
+    .ToolBar(toolbar => toolbar.Create())
+    .DataSource(data =>
+        data
+            .Ajax()
+            .Model(m =>
+                {
+                    m.Id(prod => prod.Id);
+                    m.Field(prod => prod.Product).DefaultValue(new BasicProductViewModel());
+                    m.Field(prod => prod.Color).DefaultValue(new ColorViewModel());
+                    m.Field(prod => prod.Package).DefaultValue(new PackageViewModel());
+                    m.Field(prod => prod.Id).Editable(false);
+
+                })
+            .Read(read => read.Action("Read", ControllerName))
+            .Create(create => create.Action("Create", ControllerName))
+            .Update(update => update.Action("Update", ControllerName))
+            .Destroy(destroy => destroy.Action("Destroy", ControllerName))
+            ))
+
+<script>
+    function filterTypes() {
+        return {
+            category: $("#Category").val()
+        };
+    }
+</script>

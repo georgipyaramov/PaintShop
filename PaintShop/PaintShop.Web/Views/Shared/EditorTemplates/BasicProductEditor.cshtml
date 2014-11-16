@@ -1,0 +1,16 @@
+﻿
+@{
+    const string ControllerName = "Prices";
+    const string ReadAction = "ReadProducts";
+}
+
+@(Html.Kendo()
+      .DropDownList()
+      .Name("Product")
+      .DataValueField("Id")
+      .DataTextField("Name")
+      .DataSource(source =>
+      {
+          source.Read(ReadAction, ControllerName);
+      })
+)
