@@ -26,6 +26,10 @@
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { })</li>
                     <li>@Html.ActionLink("Products", "Index", "Products", new { area = "" }, new { })</li>
                     <li>@Html.ActionLink("About Us", "Contact", "About", new { area = "" }, new { })</li>
+                    @if (User.IsInRole("admin") || User.IsInRole("employee"))
+                    {
+                        <li>@Html.ActionLink("Employee", "Index", "Calculator", new { area = "Employees" }, new { })</li>
+                    }
                     @if (User.IsInRole("admin"))
                     {
                         <li>@Html.ActionLink("Administration", "Index", "Products", new { area = "Administration" }, new { })</li>

@@ -197,6 +197,7 @@
     <Compile Include="Areas\Employees\Controllers\CalculatorController.cs" />
     <Compile Include="Areas\Employees\EmployeesAreaRegistration.cs" />
     <Compile Include="Areas\Employees\ViewModels\Calculator\CalculationParametersInputModel.cs" />
+    <Compile Include="Areas\Employees\ViewModels\Calculator\CalculatorProductResultViewModel.cs" />
     <Compile Include="Areas\Employees\ViewModels\Calculator\ColorViewModel.cs" />
     <Compile Include="Areas\Employees\ViewModels\Calculator\ProductWithPrIdViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />

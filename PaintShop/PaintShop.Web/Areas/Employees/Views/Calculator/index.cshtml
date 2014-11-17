@@ -1,4 +1,4 @@
-﻿@model decimal
+﻿@model IEnumerable<PaintShop.Web.Areas.Employees.ViewModels.Calculator.CalculatorProductResultViewModel>
 @{
     ViewBag.Title = "Calculator";
     const string ControllerName = "Calculator";
@@ -9,7 +9,7 @@
 <h2>Calculator</h2>
 
 <div class="row">
-    @using (Html.BeginForm("Calculate", "Calculator", FormMethod.Post))
+    @using (Html.BeginForm("Calculate", "Calculator", FormMethod.Post, new { @class = "form-horizontal"}))
     {
         <div class="col-sm-2">
             @(Html.Kendo()
@@ -18,6 +18,7 @@
         .Filter("contains")
         .AutoBind(false)
         .MinLength(2)
+        .HtmlAttributes(new { @class = "form-control"})
         .Placeholder("Enter product")
         .DataTextField("ProductIdentificator")
         .DataValueField("Id")
@@ -26,7 +27,8 @@
             source.Read(read =>
             {
                 read.Action(ProductReadAction, ControllerName);
-            });
+            })
+            .ServerFiltering(false);
         })
         .Suggest(true))
         </div>
@@ -38,6 +40,7 @@
         .Filter("contains")
         .AutoBind(false)
         .MinLength(2)
+        .HtmlAttributes(new { @class = "form-control" })
         .Placeholder("Enter color")
         .DataTextField("ColorIdentificator")
         .DataValueField("Id")
@@ -46,21 +49,52 @@
             source.Read(read =>
             {
                 read.Action(ColorReadAction, ControllerName);
-            });
+            })
+            .ServerFiltering(false);
         })
         .Suggest(true))
         </div>
-        
+
         <div class="col-sm-2">
-            <input type="number" step="any" name="Quadrature" />
+            <input class="form-control" type="number" step="any" name="Quadrature" />
         </div>
 
-        <input type="submit" name="CalculatorFrom" />
+        <input class="btn btn-success" type="submit" name="CalculatorFrom" />
 
     }
 
 </div>
 <div>
-    <h2>@Model</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="text-center">Type</th>
+                <th class="text-center">Product Code</th>
+                <th class="text-center">Product Name</th>
+                <th class="text-center">Color Code</th>
+                <th class="text-center">Liters / Kilograms</th>
+                <th class="text-center">Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Type</td>
+                    <td>@product.Identificator</td>
+                    <td>@product.Name</td>
+                    <td>@product.ColorIdentificator</td>
+                    <td>@product.LitersNeeded</td>
+                    <td>@product.TotalPrice</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (TempData["Price"] != null)
+    {
+        <h2>Total price: @((decimal)TempData["Price"])</h2>
+    }
+    
 </div>
+
 

@@ -1,5 +1,6 @@
 ﻿namespace PaintShop.Web.Areas.Administration.Controllers.Base
 {
+    using System;
     using System.Linq;
     using System.Collections;
     using System.Web.Mvc;
@@ -76,7 +77,13 @@
         {
             var entry = this.Data.Context.Entry(dbModel);
             entry.State = state;
-            this.Data.SaveChanges();
+            try
+            {
+                this.Data.SaveChanges();
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

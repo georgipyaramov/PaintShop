@@ -20,13 +20,19 @@
         public ActionResult Index()
         {
             var price = 0m;
+            var calculatedProducts = new List<CalculatorProductResultViewModel>();
 
             if (TempData["Price"] != null)
             {
                 price = (decimal)this.TempData["Price"];
             }
 
-            return View(price);
+            if (this.TempData["CalculatedProducts"] != null)
+            {
+                calculatedProducts = (List<CalculatorProductResultViewModel>)this.TempData["CalculatedProducts"];
+            }
+
+            return View(calculatedProducts);
         }
 
         public ActionResult ReadProducts()
@@ -49,6 +55,8 @@
 
         public ActionResult Calculate(CalculationParametersInputModel model)
         {
+            var calculatedProducts = new List<CalculatorProductResultViewModel>();
+
             var product = this.Data.Products.GetById(model.Product);
             var color = this.Data.Colors.GetById(model.Color);
 
@@ -64,8 +72,21 @@
             var packsNeeded = this.CalculateNeededPackages(litterNeeded, packs);
             var price = this.CalculatePrice(packsNeeded, packs, priceTable);
 
-            price += this.CalculatePriceOfAdjacentProducts(product, color, model);
+            var calculatedProduct = new CalculatorProductResultViewModel()
+            {
+                Type = product.ProductType.Name,
+                Name = product.Name,
+                LitersNeeded = litterNeeded,
+                TotalPrice = price,
+                Identificator = product.ProductIdentificator,
+                ColorIdentificator = color.ColorIdentificator
+            };
 
+            calculatedProducts.Add(calculatedProduct);
+
+            price += this.CalculatePriceOfAdjacentProducts(product, color, model, calculatedProducts);
+
+            this.TempData["CalculatedProducts"] = calculatedProducts;
             this.TempData["Price"] = price;
 
             return RedirectToAction("Index");
@@ -86,7 +107,12 @@
 
         private int CalculateLittersNeeded(double quadrature, double productConsumption)
         {
-            return (int)(Math.Round(quadrature / productConsumption));
+            var lll = (int)(Math.Round(quadrature / productConsumption));
+            if ((quadrature / productConsumption) - productConsumption > 0)
+            {
+                lll++;
+            }
+            return lll;
         }
 
         private decimal CalculatePrice(IList<int> neededPackages, IList<int> availablePackages, IQueryable<ProductColorPackagePrice> priceTable)
@@ -103,7 +129,7 @@
             return price;
         }
 
-        private decimal CalculatePriceOfAdjacentProducts(Product product, Color color, CalculationParametersInputModel model)
+        private decimal CalculatePriceOfAdjacentProducts(Product product, Color color, CalculationParametersInputModel model, IList<CalculatorProductResultViewModel> calculatedProducts)
         {
             var priceOfAdjacentProducts = 0m;
 
@@ -126,7 +152,22 @@
                 var packsNeeded2 = this.CalculateNeededPackages(litterNeeded2, packs2);
                 var price2 = this.CalculatePrice(packsNeeded2, packs2, priceTable2);
 
+                var calculatedProduct = new CalculatorProductResultViewModel()
+                {
+                    Type = prod.ProductType.Name,
+                    Name = prod.Name,
+                    LitersNeeded = litterNeeded2,
+                    TotalPrice = price2,
+                    Identificator = prod.ProductIdentificator,
+                    ColorIdentificator = priceTable2.FirstOrDefault().Color.ColorIdentificator
+                };
+
+                calculatedProducts.Add(calculatedProduct);
+
                 priceOfAdjacentProducts += price2;
+
+                priceOfAdjacentProducts += CalculatePriceOfAdjacentProducts(prod, color, model, calculatedProducts);
+
             }
 
             return priceOfAdjacentProducts;
