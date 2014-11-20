@@ -64,6 +64,19 @@
                                  .Where(x => x.ProductId == product.Id &&
                                              x.ColorId == color.Id);
 
+            if (priceTable.Count() == 0)
+            {
+                priceTable = this.Data.ProductsColorsPackagesPrices.All()
+                                 .Where(x => x.ProductId == product.Id &&
+                                 x.Color.ColorIdentificator == "WHITE");
+            }
+            if (priceTable.Count() == 0)
+            {
+                priceTable = this.Data.ProductsColorsPackagesPrices.All()
+                                 .Where(x => x.ProductId == product.Id &&
+                                 x.Color.ColorIdentificator == "NULL");
+            }
+
             var packs = priceTable.OrderByDescending(x => x.Package.Quantity)
                                   .Select(x => x.Package.Quantity)
                                   .ToList();
@@ -79,7 +92,9 @@
                 LitersNeeded = litterNeeded,
                 TotalPrice = price,
                 Identificator = product.ProductIdentificator,
-                ColorIdentificator = color.ColorIdentificator
+                ColorIdentificator = priceTable.FirstOrDefault().Color.ColorIdentificator,
+                ColorRgbCode = priceTable.FirstOrDefault().Color.RgbCode,
+                Quadrature = model.Quadrature
             };
 
             calculatedProducts.Add(calculatedProduct);
@@ -108,7 +123,7 @@
         private int CalculateLittersNeeded(double quadrature, double productConsumption)
         {
             var lll = (int)(Math.Round(quadrature / productConsumption));
-            if ((quadrature / productConsumption) - productConsumption > 0)
+            if ((quadrature / productConsumption) - productConsumption > 0 && quadrature / productConsumption > lll)
             {
                 lll++;
             }
@@ -141,7 +156,14 @@
                 if (priceTable2.Count() == 0)
                 {
                     priceTable2 = this.Data.ProductsColorsPackagesPrices.All()
-                                     .Where(x => x.ProductId == prod.Id);
+                                     .Where(x => x.ProductId == prod.Id &&
+                                     x.Color.ColorIdentificator == "WHITE");
+                }
+                if (priceTable2.Count() == 0)
+                {
+                    priceTable2 = this.Data.ProductsColorsPackagesPrices.All()
+                                     .Where(x => x.ProductId == prod.Id &&
+                                     x.Color.ColorIdentificator == "NULL");
                 }
 
                 var packs2 = priceTable2.OrderByDescending(x => x.Package.Quantity)
@@ -159,7 +181,9 @@
                     LitersNeeded = litterNeeded2,
                     TotalPrice = price2,
                     Identificator = prod.ProductIdentificator,
-                    ColorIdentificator = priceTable2.FirstOrDefault().Color.ColorIdentificator
+                    ColorIdentificator = priceTable2.FirstOrDefault().Color.ColorIdentificator,
+                    ColorRgbCode = priceTable2.FirstOrDefault().Color.RgbCode,
+                    Quadrature = model.Quadrature
                 };
 
                 calculatedProducts.Add(calculatedProduct);

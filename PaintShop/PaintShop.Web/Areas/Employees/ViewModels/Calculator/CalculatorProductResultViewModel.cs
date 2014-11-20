@@ -19,5 +19,10 @@
         public int LitersNeeded { get; set; }
 
         public decimal TotalPrice { get; set; }
+
+        public double Quadrature { get; set; }
+
+        public string ColorRgbCode { get; set; }
+
     }
 }

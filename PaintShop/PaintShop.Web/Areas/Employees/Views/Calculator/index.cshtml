@@ -65,6 +65,10 @@
 
 </div>
 <div>
+    @if (@Model.FirstOrDefault() != null)
+    {
+        <h3>@(Model.FirstOrDefault().Quadrature) m2</h3>
+    }
     <table class="table table-bordered">
         <thead>
             <tr>
